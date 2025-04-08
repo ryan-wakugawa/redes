@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test
+    ports:
+      - "3001:3000"
+    environment:
+      DB_URL: production
+    volumes:
+      - ./app:/usr/src/app
+    networks:
+      - app-network
+  db:
+   image: 
