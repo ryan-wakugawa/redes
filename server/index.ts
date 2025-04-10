@@ -1,7 +1,8 @@
+import 'reflect-metadata'
 import cors from "@fastify/cors";
-import fastifyPostgres from "@fastify/postgres";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import fastify from "fastify";
+import dbConnection from "typeorm-fastify-plugin";
 
 dotenv.config();
 
@@ -12,8 +13,15 @@ server.register(cors, {
   allowedHeaders: ["Content-Type"],
 });
 
-server.register(fastifyPostgres, {
-  connectionString: process.env.DATABASE_URL,
+server.register(dbConnection, {
+  type: "postgres",
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  entities: ["src/entity/*.ts"],
+  synchronize: true,
 });
 
 server.post("/", async (request, reply) => {
