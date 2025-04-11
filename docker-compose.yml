@@ -1,16 +1,53 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: test
+  frontend:
+    build: ./app
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  backend1:
+    build: ./server
+    container_name: backend-1
     ports:
       - "3001:3000"
     environment:
-      DB_URL: production
-    volumes:
-      - ./app:/usr/src/app
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
     networks:
       - app-network
-  db:
-   image: 
+
+  backend2:
+    build: ./server
+    container_name: backend-2
+    ports:
+      - "3002:3000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+    networks:
+      - app-network
+
+  backend3:
+    build: ./server
+    container_name: backend-3
+    ports:
+      - "3003:3000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+    networks:
+      - app-network
+
+networks:
+  app-network:

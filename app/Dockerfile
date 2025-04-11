@@ -1,12 +1,11 @@
+# Etapa 1: build do frontend
 FROM node:23-alpine
-
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
-
 COPY . .
-EXPOSE 3000
+RUN npm install
+RUN npm run build
 
+CMD ["npx", "vite", "--host"]
 
-CMD ["npm", "start"]
+EXPOSE 8080
