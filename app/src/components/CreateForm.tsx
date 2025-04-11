@@ -5,10 +5,8 @@ export default function CreateForm() {
   const [email, setEmail] = useState("");
 
   const handleSubmit = () => {
-    console.log(name);
-    console.log(email);
     try {
-      fetch("http://localhost:3000/", {
+      fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
