@@ -1,27 +1,78 @@
+import {
+  CircularProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { useUsers } from "../hooks/useUsers";
 import UserInterface from "../interfaces/UserInterface";
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
 
-export default function UsersTable(props: { users: UserInterface[] }) {
+export default function UsersTable() {
+  const { data: users, isLoading, isError } = useUsers();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <CircularProgress size="4rem" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Typography color="error" className="text-center">
+        Erro ao carregar usuários.
+      </Typography>
+    );
+  }
+
   return (
-    <div className="flex w-full flex-col items-center justify-around m-4">
-      <h1 className="font-bold text-lg ">Usuários</h1>
-      <table className="table-auto w-full rounded-mg border border-slate-400">
-        <thead>
-          <tr className="bg-slate-200">
-            <th className="px-4 py-2">ID</th>
-            <th className="px-4 py-2">Nome</th>
-            <th className="px-4 py-2">Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.users.map((user, index) => (
-            <tr key={index}>
-              <td className="px-4 py-2">{user.id}</td>
-              <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2">{user.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="w-full px-4 py-6 flex flex-col gap-4 items-center">
+      <TableContainer component={Paper} className="w-full">
+        <Table size="small">
+          <TableHead>
+            <TableRow className="bg-slate-200">
+              <TableCell align="center" className="font-bold uppercase">
+                ID
+              </TableCell>
+              <TableCell className="font-bold uppercase">Nome</TableCell>
+              <TableCell className="font-bold uppercase">Email</TableCell>
+              <TableCell align="center" className="font-bold uppercase">
+                Ações
+              </TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {users
+              ?.sort((a, b) => a.id - b.id)
+              .map((user: UserInterface) => (
+                <TableRow
+                  key={user.id}
+                  hover
+                  className="transition duration-150 ease-in-out"
+                >
+                  <TableCell align="center">{user.id}</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell align="center">
+                    <div className="flex justify-center gap-2">
+                      <EditButton user={user} />
+                      <DeleteButton id={user.id} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
