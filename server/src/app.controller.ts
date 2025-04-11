@@ -7,8 +7,10 @@ export class AppController {
 
   @Get()
   async getInstance() {
+    const instanceId = process.env.INSTANCE_ID;
+    console.log(process.env.INSTANCE_ID)
     return {
-      instance: process.env.INSTANCE_ID,
+      instance: instanceId,
     };
   }
 }
