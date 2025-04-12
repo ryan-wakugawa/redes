@@ -1,12 +1,4 @@
 services:
-  frontend:
-    build: ./app
-    container_name: frontend
-    ports:
-      - "8080:8080"
-    networks:
-      - app-network
-
   backend1:
     build: ./server
     container_name: backend-1
