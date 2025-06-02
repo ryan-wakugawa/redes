@@ -19,7 +19,41 @@ Este repositório contém um projeto que utiliza Docker para rodar três instân
 ## Endpoints
 
 ## Nginx
+```
+events {
+        worker_connections 768;
+        # multi_accept on;
+}
 
+http {
+        upstream servers {
+                server IP_PRIVADO_BACKEND:3001;
+                server IP_PRIVADO_BACKEND:3002;
+                server IP_PRIVADO_BACKEND:3003;
+        }
+        server {
+                listen 80;
+
+                allow 10.8.0.0/24;
+                deny all;
+
+                location / {
+                        root /home/ubuntu/redes/app/dist;
+                        index index.html;
+                }
+
+                location /api/ {
+                        proxy_pass http://servers/;
+                        proxy_http_version 1.1;
+                        proxy_set_header Host $host;
+                        proxy_set_header X-Real-IP $remote_addr;
+                        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                        proxy_set_header X-Forwarded-Proto $scheme;
+                }
+        }
+}
+
+```
 ##VPN
 ### Configuração Servidor
 ```
