@@ -12,3 +12,7 @@ Este repositório contém um projeto que utiliza Docker para rodar três instân
 ## 🐳 Imagens Docker
 - [Backend](https://hub.docker.com/r/ryanwakugawa/redes-server)
 - [Frontend](https://hub.docker.com/r/ryanwakugawa/redes-app)
+
+## Topologia
+
+## Endpoints
