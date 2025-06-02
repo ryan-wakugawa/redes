@@ -3,6 +3,7 @@
 Este repositório contém um projeto que utiliza Docker para rodar três instâncias de um servidor web, acessadas por meio de um proxy reverso e balanceador de carga.
 
 ## 🛠 Tecnologias Utilizadas
+
 - **Docker**
 - **Nginx**
 - **OpenVPN**
@@ -11,16 +12,17 @@ Este repositório contém um projeto que utiliza Docker para rodar três instân
 - **Vite**
 
 ## 🐳 Imagens Docker
+
 - [Backend](https://hub.docker.com/r/ryanwakugawa/redes-server)
 - [Frontend](https://hub.docker.com/r/ryanwakugawa/redes-app)
 
 ## Topologia
+
 ![Topologia](https://github.com/ryan-wakugawa/redes/blob/main/Redes.drawio.svg)
 
-## Endpoints
-
 ## Nginx
-```
+
+```nginx
 events {
         worker_connections 768;
         # multi_accept on;
@@ -55,9 +57,12 @@ http {
 }
 
 ```
-##VPN
+
+## VPN
+
 ### Configuração Servidor
-```
+
+```openvpn
 port 1194
 proto udp
 dev tun
@@ -79,8 +84,10 @@ log-append /var/log/openvpn.log
 verb 3
 explicit-exit-notify 1
 ```
+
 ### Configuração Cliente
-```
+
+```openvpn
 client
 dev tun
 proto udp
