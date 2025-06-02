@@ -15,6 +15,7 @@ Este repositório contém um projeto que utiliza Docker para rodar três instân
 - [Frontend](https://hub.docker.com/r/ryanwakugawa/redes-app)
 
 ## Topologia
+![Topologia](https://github.com/ryan-wakugawa/redes/blob/main/Redes.drawio.svg)
 
 ## Endpoints
 
