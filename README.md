@@ -11,6 +11,65 @@ Este repositório contém um projeto que utiliza Docker para rodar três instân
 - **NestJS**
 - **Vite**
 
+## Compose
+
+### Backend
+
+```yml
+services:
+  backend1:
+    build: ./server
+    container_name: backend-1
+    ports:
+      - "3001:3000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+      - PROXY_URL=${PROXY_URL}
+      - INSTANCE_ID=backend1
+    networks:
+      - app-network
+
+  backend2:
+    build: ./server
+    container_name: backend-2
+    ports:
+      - "3002:3000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+      - PROXY_URL=${PROXY_URL}
+      - INSTANCE_ID=backend2
+    networks:
+      - app-network
+
+  backend3:
+    build: ./server
+    container_name: backend-3
+    ports:
+      - "3003:3000"
+    environment:
+      - DB_NAME=${DB_NAME}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+      - PROXY_URL=${PROXY_URL}
+      - INSTANCE_ID=backend3
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+```
+
 ## 🐳 Imagens Docker
 
 - [Backend](https://hub.docker.com/r/ryanwakugawa/redes-server)
@@ -62,7 +121,7 @@ http {
 
 ### Configuração Servidor
 
-```openvpn
+```ovpn
 port 1194
 proto udp
 dev tun
@@ -87,7 +146,7 @@ explicit-exit-notify 1
 
 ### Configuração Cliente
 
-```openvpn
+```ovpn
 client
 dev tun
 proto udp
